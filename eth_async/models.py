@@ -1,10 +1,13 @@
 from decimal import Decimal
+import json
 from dataclasses import dataclass
 
-from web3 import Web3
 import requests
+from web3 import Web3
+from eth_typing import ChecksumAddress
 
 from . import exceptions
+from .classes import AutoRepr
 
 
 class TokenAmount:
@@ -26,7 +29,7 @@ class TokenAmount:
         self.decimals = decimals
 
     def __str__(self):
-        return f"{self.Ether}"
+        return f"{self.Wei}"
 
 
 @dataclass
@@ -229,38 +232,38 @@ class Networks:
 
     Fantom = Network(
         name="fantom",
-        rpc="https://fantom-pokt.nodies.app/",
+        rpc="https://fantom.publicnode.com",
         chain_id=250,
-        tx_type=2,
+        tx_type=0,
         coin_symbol="FTM",
         explorer="https://ftmscan.com/",
     )
 
     Celo = Network(
         name="celo",
-        rpc="https://1rpc.io/celo/",
+        rpc="https://1rpc.io/celo",
         chain_id=42220,
-        tx_type=2,
+        tx_type=0,
         coin_symbol="CELO",
-        explorer="https://explorer.celo.org/",
+        explorer="https://celoscan.io/",
     )
 
     Gnosis = Network(
         name="gnosis",
-        rpc="https://gnosis.publicnode.com/",
+        rpc="https://rpc.ankr.com/gnosis",
         chain_id=100,
         tx_type=2,
-        coin_symbol="XDAI",
+        coin_symbol="xDAI",
         explorer="https://gnosisscan.io/",
     )
 
     HECO = Network(
         name="heco",
-        rpc="https://http-mainnet-node.huobichain.com",
+        rpc="https://http-mainnet.hecochain.com",
         chain_id=128,
         tx_type=2,
-        coin_symbol="HT",
-        explorer="https://hecoscan.io/#/",
+        coin_symbol="HECO",
+        explorer="https://www.hecoinfo.com/en-us/",
     )
 
     # Testnets
@@ -275,9 +278,92 @@ class Networks:
 
     Sepolia = Network(
         name="sepolia",
-        rpc="https://ethereum-sepolia.publicnode.com",
+        rpc="https://rpc.sepolia.org",
         chain_id=11155111,
         tx_type=2,
         coin_symbol="ETH",
-        explorer="https://sepolia.etherscan.io/",
+        explorer="https://sepolia.etherscan.io",
     )
+
+
+class RawContract(AutoRepr):
+    """
+    An instance of a raw contract.
+
+    Attributes:
+        title str: a contract title.
+        address (ChecksumAddress): a contract address.
+        abi list[dict[str, Any]] | str: an ABI of the contract.
+
+    """
+
+    title: str
+    address: ChecksumAddress
+    abi: list[dict[str, ...]]
+
+    def __init__(
+        self, title: str, address: str, abi: list[dict[str, ...]] | str
+    ) -> None:
+        """
+        Initialize the class.
+
+        Args:
+            title (str): a contract title.
+            address (str): a contract address.
+            abi (Union[List[Dict[str, Any]], str]): an ABI of the contract.
+
+        """
+        self.title = title
+        self.address = Web3.to_checksum_address(address)
+        self.abi = json.loads(abi) if isinstance(abi, str) else abi
+
+
+@dataclass
+class CommonValues:
+    """
+    An instance with common values used in transactions.
+    """
+
+    Null: str = "0x0000000000000000000000000000000000000000000000000000000000000000"
+    InfinityStr: str = (
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    )
+    InfinityInt: int = int(
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16
+    )
+
+
+class TxArgs(AutoRepr):
+    """
+    An instance for named transaction arguments.
+    """
+
+    def __init__(self, **kwargs) -> None:
+        """
+        Initialize the class.
+
+        Args:
+            **kwargs: named arguments of a contract transaction.
+
+        """
+        self.__dict__.update(kwargs)
+
+    def list(self) -> list[...]:
+        """
+        Get list of transaction arguments.
+
+        Returns:
+            List[Any]: list of transaction arguments.
+
+        """
+        return list(self.__dict__.values())
+
+    def tuple(self) -> tuple[str, ...]:
+        """
+        Get tuple of transaction arguments.
+
+        Returns:
+            Tuple[Any]: tuple of transaction arguments.
+
+        """
+        return tuple(self.__dict__.values())

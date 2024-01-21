@@ -9,8 +9,8 @@ from eth_account.signers.local import LocalAccount
 from .exceptions import InvalidProxy
 from .wallet import Wallet
 from .contracts import Contracts
-from .models import Networks, Network
 from .transactions import Transactions
+from .models import Networks, Network
 
 
 class Client:
