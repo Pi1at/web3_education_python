@@ -7,8 +7,8 @@ from data.config import pk, seed
 from eth_async.utils import utils
 
 
-eth_rpc = 'https://eth.llamarpc.com'
-arb_rpc = 'https://arbitrum.llamarpc.com'
+eth_rpc = "https://eth.llamarpc.com"
+arb_rpc = "https://arbitrum.llamarpc.com"
 
 
 def get_private_from_seed(seed: str) -> str:
@@ -38,26 +38,26 @@ print(f"number of current chain is {web3.eth.chain_id}")
 address = web3.eth.account.from_key(private_key=pk).address
 address = address.lower()
 print(address)
-wallet_address = Web3.to_checksum_address(
-    address
-)
+wallet_address = Web3.to_checksum_address(address)
 print(wallet_address)
 
 balance = web3.eth.get_balance(wallet_address)
 print(f"balance of {wallet_address} = {balance} WEI")
 
 # перевод в разные системы измерения
-ether_balance = Web3.from_wei(balance, 'ether')
-print(ether_balance, 'ETH')
-print(Web3.from_wei(balance, 'gwei'), 'GWEI')
-print(Web3.to_wei(ether_balance, 'ether'), 'WEI')
+ether_balance = Web3.from_wei(balance, "ether")
+print(ether_balance, "ETH")
+print(Web3.from_wei(balance, "gwei"), "GWEI")
+print(Web3.to_wei(ether_balance, "ether"), "WEI")
 
 
 # получение приватного ключа из сид фразы
 private_key = get_private_from_seed(seed=seed)
-print('private_key', private_key)
+print("private_key", private_key)
 
-usdc_contract_address = Web3.to_checksum_address('0xaf88d065e77c8cc2239327c5edb3a432268e5831')
+usdc_contract_address = Web3.to_checksum_address(
+    "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+)
 # token_abi = utils.read_json('data/abis/token.json')
 
 from eth_async.models import DefaultABIs
@@ -66,4 +66,4 @@ usdc_contract = web3.eth.contract(address=usdc_contract_address, abi=DefaultABIs
 
 decimals = usdc_contract.functions.decimals().call()
 
-print(usdc_contract.functions.balanceOf(wallet_address).call() / 10 ** decimals)
+print(usdc_contract.functions.balanceOf(wallet_address).call() / 10**decimals)

@@ -1,21 +1,21 @@
 from decimal import Decimal
 
 
-'''
+"""
 Token:
     address
     balance
-'''
+"""
 
 tokens_dict = {
-    'ETH': {
-        'address': '0x00000000000000000000000000000000000000',
-        'balancee': 1000000000000000000
+    "ETH": {
+        "address": "0x00000000000000000000000000000000000000",
+        "balancee": 1000000000000000000,
     },
-    'USDC': {
-        'address': '0xIu67bubyTG23GBybuyb72672367826374gVHH76',
-        'balancee': 1000000
-    }
+    "USDC": {
+        "address": "0xIu67bubyTG23GBybuyb72672367826374gVHH76",
+        "balancee": 1000000,
+    },
 }
 
 
@@ -27,15 +27,23 @@ class Token:
         self.balance = balance
 
     def __str__(self):
-        return f'name: {self.name} | address: {self.address} | balance: {self.balance}'
+        return f"name: {self.name} | address: {self.address} | balance: {self.balance}"
 
     def __repr__(self):
         return f'Token(name="{self.name}", address="{self.address}", balance={self.balance})'
 
 
 class Tokens:
-    ETH = Token(name='ETH', address='0x00000000000000000000000000000000000000', balance=1000000000000000000)
-    USDC = Token(name='USDC', address='0xIu67bubyTG23GBybuyb72672367826374gVHH76', balance=1000000)
+    ETH = Token(
+        name="ETH",
+        address="0x00000000000000000000000000000000000000",
+        balance=1000000000000000000,
+    )
+    USDC = Token(
+        name="USDC",
+        address="0xIu67bubyTG23GBybuyb72672367826374gVHH76",
+        balance=1000000,
+    )
 
 
 # print(Tokens.USDC.balance)

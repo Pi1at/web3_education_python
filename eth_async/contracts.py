@@ -15,6 +15,10 @@ class Contracts:
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    async def default_token(self, contract_address: ChecksumAddress | str) -> Contract | AsyncContract:
+    async def default_token(
+        self, contract_address: ChecksumAddress | str
+    ) -> Contract | AsyncContract:
         contract_address = Web3.to_checksum_address(contract_address)
-        return self.client.w3.eth.contract(address=contract_address, abi=DefaultABIs.Token)
+        return self.client.w3.eth.contract(
+            address=contract_address, abi=DefaultABIs.Token
+        )
