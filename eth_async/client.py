@@ -66,3 +66,4 @@ class Client:
 
         self.wallet = Wallet(self)
         self.contracts = Contracts(self)
+        self.transactions = Transactions(self)
