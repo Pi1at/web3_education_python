@@ -214,17 +214,41 @@ class Networks:
         explorer='https://moonscan.io/',
     )
 
-    # TODO: сделать самостоятельно
-    Fantom = ...
+    Fantom = Network(
+        name='fantom',
+        rpc='https://fantom-pokt.nodies.app/',
+        chain_id=250,
+        tx_type=2,
+        coin_symbol='FTM',
+        explorer='https://ftmscan.com/',
+        )
 
-    # TODO: сделать самостоятельно
-    Celo = ...
+    Celo = Network(
+        name='celo',
+        rpc="https://1rpc.io/celo/",
+        chain_id=42220,
+        tx_type=2,
+        coin_symbol='CELO',
+        explorer='https://explorer.celo.org/',
+    )
 
-    # TODO: сделать самостоятельно
-    Gnosis = ...
+    Gnosis = Network(
+        name='gnosis',
+        rpc='https://gnosis.publicnode.com/',
+        chain_id=100,
+        tx_type=2,
+        coin_symbol='XDAI',
+        explorer='https://gnosisscan.io/',
+    )
 
-    # TODO: сделать самостоятельно
-    HECO = ...
+    HECO = Network(
+        name='heco',
+        rpc='https://http-mainnet-node.huobichain.com',
+        chain_id=128,
+        tx_type=2,
+        coin_symbol='HT',
+        explorer='https://hecoscan.io/#/'
+    )
 
     # Testnets
     Goerli = Network(
@@ -236,5 +260,11 @@ class Networks:
         explorer='https://goerli.etherscan.io/',
     )
 
-    # TODO: сделать самостоятельно
-    Sepolia = ...
+    Sepolia = Network(
+        name='sepolia',
+        rpc='https://ethereum-sepolia.publicnode.com',
+        chain_id=11155111,
+        tx_type=2,
+        coin_symbol='ETH',
+        explorer='https://sepolia.etherscan.io/',
+    )
